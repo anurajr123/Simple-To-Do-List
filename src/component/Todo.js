@@ -1,11 +1,13 @@
 import React from 'react';
+import TodoDisp from './TodoDisp';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+// import TodoList from './TodoList';
+const MyContext = React.createContext();
 
 export default function Todo() {
     const [todos, setTodos] = React.useState([]);
     function submit(todo) {
-    
       const newTodo = {
         id: new Date().getTime(),
         text: todo,
@@ -44,10 +46,10 @@ export default function Todo() {
   return (
     <div id="todo-list">
     <TodoForm submit={submit}/>
-    <TodoList todos={todos} 
-    toggleComplete={toggleComplete}
-    submitEdits={submitEdits}
-    deleteTodo={deleteTodo} />
+    <MyContext.Provider value={{todos, toggleComplete, submitEdits, deleteTodo}}>
+    <TodoList/>
+    </MyContext.Provider>
   </div>
   )
 }
+export {MyContext}
